@@ -34,6 +34,7 @@ namespace IpSelector
             this.CurrentIpLabel = new System.Windows.Forms.Label();
             this.CurrentIpTextBox = new System.Windows.Forms.TextBox();
             this.CustomIpTextbox = new System.Windows.Forms.TextBox();
+            this.CustomSubnetMaskTextbox = new System.Windows.Forms.TextBox();
             this.SetIpLabel = new System.Windows.Forms.Label();
             this.SaveCustomIp = new System.Windows.Forms.Button();
             this.CopyCurrentIpButton = new System.Windows.Forms.Button();
@@ -80,8 +81,18 @@ namespace IpSelector
             this.CustomIpTextbox.Location = new System.Drawing.Point(339, 227);
             this.CustomIpTextbox.Name = "CustomIpTextbox";
             this.CustomIpTextbox.Size = new System.Drawing.Size(123, 24);
-            this.CustomIpTextbox.TabIndex = 14;
+            this.CustomIpTextbox.TabIndex = 6;
             this.CustomIpTextbox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // CustomSubnetMaskTextbox
+            // 
+            this.CustomSubnetMaskTextbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CustomSubnetMaskTextbox.Location = new System.Drawing.Point(339, 257);
+            this.CustomSubnetMaskTextbox.Name = "CustomSubnetMaskTextbox";
+            this.CustomSubnetMaskTextbox.Size = new System.Drawing.Size(123, 24);
+            this.CustomSubnetMaskTextbox.TabIndex = 7;
+            this.CustomSubnetMaskTextbox.Text = "255.255.255.0";
+            this.CustomSubnetMaskTextbox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // SetIpLabel
             // 
@@ -90,16 +101,16 @@ namespace IpSelector
             this.SetIpLabel.Location = new System.Drawing.Point(334, 200);
             this.SetIpLabel.Name = "SetIpLabel";
             this.SetIpLabel.Size = new System.Drawing.Size(132, 24);
-            this.SetIpLabel.TabIndex = 13;
+            this.SetIpLabel.TabIndex = 8;
             this.SetIpLabel.Text = "Set Custom IP:";
             // 
             // SaveCustomIp
             // 
             this.SaveCustomIp.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SaveCustomIp.Location = new System.Drawing.Point(358, 257);
+            this.SaveCustomIp.Location = new System.Drawing.Point(358, 287);
             this.SaveCustomIp.Name = "SaveCustomIp";
             this.SaveCustomIp.Size = new System.Drawing.Size(86, 31);
-            this.SaveCustomIp.TabIndex = 15;
+            this.SaveCustomIp.TabIndex = 9;
             this.SaveCustomIp.Text = "Set";
             this.SaveCustomIp.UseVisualStyleBackColor = true;
             this.SaveCustomIp.Click += new System.EventHandler(this.SaveCustomIp_Click);
@@ -110,7 +121,7 @@ namespace IpSelector
             this.CopyCurrentIpButton.Location = new System.Drawing.Point(358, 150);
             this.CopyCurrentIpButton.Name = "CopyCurrentIpButton";
             this.CopyCurrentIpButton.Size = new System.Drawing.Size(86, 31);
-            this.CopyCurrentIpButton.TabIndex = 16;
+            this.CopyCurrentIpButton.TabIndex = 4;
             this.CopyCurrentIpButton.Text = "Copy";
             this.CopyCurrentIpButton.UseVisualStyleBackColor = true;
             this.CopyCurrentIpButton.Click += new System.EventHandler(this.CopyCurrentIpButton_Click);
@@ -131,7 +142,7 @@ namespace IpSelector
             this.InterfacesButton.Location = new System.Drawing.Point(665, 12);
             this.InterfacesButton.Name = "InterfacesButton";
             this.InterfacesButton.Size = new System.Drawing.Size(92, 23);
-            this.InterfacesButton.TabIndex = 18;
+            this.InterfacesButton.TabIndex = 10;
             this.InterfacesButton.Text = "Interfaces";
             this.InterfacesButton.UseVisualStyleBackColor = true;
             this.InterfacesButton.Click += new System.EventHandler(this.SettingsButton_Click);
@@ -141,7 +152,7 @@ namespace IpSelector
             this.IpsButton.Location = new System.Drawing.Point(665, 41);
             this.IpsButton.Name = "IpsButton";
             this.IpsButton.Size = new System.Drawing.Size(92, 23);
-            this.IpsButton.TabIndex = 19;
+            this.IpsButton.TabIndex = 11;
             this.IpsButton.Text = "IP Addresses";
             this.IpsButton.UseVisualStyleBackColor = true;
             this.IpsButton.Click += new System.EventHandler(this.IpsButton_Click);
@@ -151,13 +162,14 @@ namespace IpSelector
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(800, 319);
+            this.ClientSize = new System.Drawing.Size(800, 328);
             this.Controls.Add(this.IpsButton);
             this.Controls.Add(this.InterfacesButton);
             this.Controls.Add(this.DHCPButton);
             this.Controls.Add(this.CopyCurrentIpButton);
             this.Controls.Add(this.SaveCustomIp);
             this.Controls.Add(this.CustomIpTextbox);
+            this.Controls.Add(this.CustomSubnetMaskTextbox);
             this.Controls.Add(this.SetIpLabel);
             this.Controls.Add(this.CurrentIpTextBox);
             this.Controls.Add(this.CurrentIpLabel);
@@ -179,6 +191,7 @@ namespace IpSelector
         private System.Windows.Forms.Label CurrentIpLabel;
         private System.Windows.Forms.TextBox CurrentIpTextBox;
         private System.Windows.Forms.TextBox CustomIpTextbox;
+        private System.Windows.Forms.TextBox CustomSubnetMaskTextbox;
         private System.Windows.Forms.Label SetIpLabel;
         private System.Windows.Forms.Button SaveCustomIp;
         private System.Windows.Forms.Button CopyCurrentIpButton;

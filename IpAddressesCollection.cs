@@ -17,21 +17,21 @@ namespace IpSelector
                 foreach (string line in addressLines)
                 {
                     string[] parts = line.Split(';');
-                    IpAddress ipAddress = new IpAddress(parts[0], parts[1]);
+                    IpAddress ipAddress = new IpAddress(parts[0], parts[1], parts[2]);
                     this.items.Add(ipAddress);
                 }
             }
         }
 
-        public void AddItem(string name, string ipAddress)
+        public void AddItem(string name, string ipAddress, string subnetMask)
         {
-            this.items.Add(new IpAddress(name, ipAddress));
+            this.items.Add(new IpAddress(name, ipAddress, subnetMask));
             CompileNewFile();
         }
 
-        public void EditItem(int index, string name, string ipAddress)
+        public void EditItem(int index, string name, string ipAddress, string subnetMask)
         {
-            this.items.Insert(index, new IpAddress(name, ipAddress));
+            this.items.Insert(index, new IpAddress(name, ipAddress, subnetMask));
             this.items.RemoveAt(index + 1);
             CompileNewFile();
         }
@@ -47,7 +47,7 @@ namespace IpSelector
             string content = "";
             foreach (IpAddress ipAddress in this.items)
             {
-                content += string.Format("{0};{1}\n", ipAddress.name, ipAddress.ipAddress);
+                content += string.Format("{0};{1};{2}\n", ipAddress.name, ipAddress.ipAddress, ipAddress.subnetMask);
             }
             System.IO.File.WriteAllText(filename, content);
         }

@@ -56,6 +56,8 @@ namespace IpSelector
 
             NameTextBox.Text = selectedIpAddress.name;
             IpAddressTextBox.Text = selectedIpAddress.ipAddress;
+            SubnetMaskTextBox.Text = selectedIpAddress.subnetMask;
+
             CancelEditButton.Visible = true;
             this.currentAction = ACTION_EDIT;
         }
@@ -85,12 +87,12 @@ namespace IpSelector
             }
             if (currentAction == ACTION_NEW)
             {
-                this.mainForm.ipAddressesCollection.AddItem(NameTextBox.Text, IpAddressTextBox.Text);
+                this.mainForm.ipAddressesCollection.AddItem(NameTextBox.Text, IpAddressTextBox.Text, SubnetMaskTextBox.Text);
             }
             if (currentAction == ACTION_EDIT)
             {
                 int selectedIndex = IpAddressesListBox.SelectedIndex;
-                this.mainForm.ipAddressesCollection.EditItem(selectedIndex, NameTextBox.Text, IpAddressTextBox.Text);
+                this.mainForm.ipAddressesCollection.EditItem(selectedIndex, NameTextBox.Text, IpAddressTextBox.Text, SubnetMaskTextBox.Text);
             }
             UpdateIpAddressesListBox();
             this.mainForm.DrawIpButtons();
@@ -108,6 +110,7 @@ namespace IpSelector
             EditingIpLabel.Visible = false;
             NameTextBox.Text = "";
             IpAddressTextBox.Text = "";
+            SubnetMaskTextBox.Text = "";
             CancelEditButton.Visible = false;
             this.currentAction = ACTION_NEW;
             NameErrorProvider.Clear();
@@ -168,6 +171,27 @@ namespace IpSelector
 
             e.Cancel = false;
             IpAddressErrorProvider.Clear();
+        }
+
+        private void SubnetMaskTextBox_Validating(object sender, CancelEventArgs e)
+        {
+            if (String.IsNullOrWhiteSpace(SubnetMaskTextBox.Text))
+            {
+                e.Cancel = true;
+                SubnetMaskErrorProvider.SetError(SubnetMaskTextBox, "Subnet Mask cannot be left blank.");
+
+                return;
+            }
+            if (!Regex.IsMatch(SubnetMaskTextBox.Text, @"^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"))
+            {
+                e.Cancel = true;
+                SubnetMaskErrorProvider.SetError(SubnetMaskTextBox, "This doesn't look like a Subnet Mask.");
+
+                return;
+            }
+
+            e.Cancel = false;
+            SubnetMaskErrorProvider.Clear();
         }
 
         private void IpAddressesForm_FormClosing(object sender, FormClosingEventArgs e)

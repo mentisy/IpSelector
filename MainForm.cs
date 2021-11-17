@@ -6,7 +6,6 @@ namespace IpSelector
 {
     public partial class MainForm : Form
     {
-        public const string USE_SUBNET_MASK = "255.255.255.0";
         public const string GATEWAY_IP_END = "1";
 
         public InterfacesForm settingsForm;
@@ -45,8 +44,9 @@ namespace IpSelector
         public void SetRegisteredIpButton_Click(object sender, EventArgs e)
         {
             string ip = sender.GetType().GetProperty("Name").GetValue(sender).ToString();
+            string subnet = sender.GetType().GetProperty("AccessibleName").GetValue(sender).ToString();
 
-            ChangeIp(ip);
+            ChangeIp(ip, subnet);
         }
 
         private void CopyCurrentIpButton_Click(object sender, EventArgs e)
@@ -79,7 +79,7 @@ namespace IpSelector
             this.Enabled = false;
         }
 
-        private void ChangeIp(string ip)
+        private void ChangeIp(string ip, string subnetMask)
         {
             if (this.useInterface.Length == 0)
             {
@@ -87,9 +87,12 @@ namespace IpSelector
                 return;
             }
             string gateway = GetGatewayFromIp(ip);
-            IpUtils.SetIP(this.useInterface, ip, USE_SUBNET_MASK, gateway);
-            CurrentIpTextBox.Text = IpUtils.GetLocalIp(this.useInterface);
-            CustomIpTextbox.Text = ip;
+            if (IpUtils.SetIP(this.useInterface, ip, subnetMask, gateway))
+            {
+                CurrentIpTextBox.Text = IpUtils.GetLocalIp(this.useInterface);
+                CustomIpTextbox.Text = ip;
+                CustomSubnetMaskTextbox.Text = subnetMask;
+            }
         }
 
         private string GetGatewayFromIp(string ip)
@@ -102,7 +105,8 @@ namespace IpSelector
         private void SaveCustomIp_Click(object sender, EventArgs e)
         {
             string customIp = CustomIpTextbox.Text;
-            ChangeIp(customIp);
+            string customSubnetMask = CustomSubnetMaskTextbox.Text;
+            ChangeIp(customIp, customSubnetMask);
         }
 
         private void IpsButton_Click(object sender, EventArgs e)

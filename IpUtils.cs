@@ -21,15 +21,21 @@ namespace IpSelector
                 return true;    // no change necessary
             }
 
-
-            var process = new Process();
-            string command = $"interface ip set address \"{networkInterfaceName}\" static {ipAddress} {subnetMask}" + (string.IsNullOrWhiteSpace(gateway) ? "" : $" {gateway} 1");
-            process.StartInfo = new ProcessStartInfo("netsh", command) { Verb = "runas" };
-            process.Start();
-            process.WaitForExit();
-            var successful = process.ExitCode == 0;
-            process.Dispose();
-            return successful;
+            try
+            {
+                var process = new Process();
+                string command = $"interface ip set address \"{networkInterfaceName}\" static {ipAddress} {subnetMask}" + (string.IsNullOrWhiteSpace(gateway) ? "" : $" {gateway} 1");
+                process.StartInfo = new ProcessStartInfo("netsh", command) { Verb = "runas" };
+                process.Start();
+                process.WaitForExit();
+                var successful = process.ExitCode == 0;
+                process.Dispose();
+                return successful;
+            }
+            catch (System.ComponentModel.Win32Exception)
+            {
+                return false;
+            }
         }
 
         public static bool SetDHCP(string networkInterfaceName)
@@ -48,11 +54,18 @@ namespace IpSelector
             {
                 StartInfo = new ProcessStartInfo("netsh", command) { Verb = "runas" }
             };
-            process.Start();
-            process.WaitForExit();
-            var successful = process.ExitCode == 0;
-            process.Dispose();
-            return successful;
+            try
+            {
+                process.Start();
+                process.WaitForExit();
+                var successful = process.ExitCode == 0;
+                process.Dispose();
+                return successful;
+            } 
+            catch (System.ComponentModel.Win32Exception)
+            {
+                return false;
+            }
         }
 
         public static string GetLocalIp(string networkInterfaceName)

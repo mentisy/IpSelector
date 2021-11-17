@@ -56,6 +56,7 @@ namespace IpSelector
                 Size = new System.Drawing.Size(size[0], size[1]),
                 Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0))),
                 Name = ipAddress.ipAddress,
+                AccessibleName = ipAddress.subnetMask,
             };
             button.Click += new EventHandler(this.parentForm.SetRegisteredIpButton_Click);
             this.buttons.Add(button);

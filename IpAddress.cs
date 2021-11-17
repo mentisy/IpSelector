@@ -10,11 +10,13 @@ namespace IpSelector
     {
         public string name = "";
         public string ipAddress = "";
+        public string subnetMask = "255.255.255.0";
 
-        public IpAddress(string name, string ipAddress)
+        public IpAddress(string name, string ipAddress, String subnetMask)
         {
             this.name = name;
             this.ipAddress = ipAddress;
+            this.subnetMask = subnetMask;
         }
     }
 }
